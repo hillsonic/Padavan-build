@@ -40,7 +40,7 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: K2P-5.0
+        TNAME: B70
       run: |
         cd /opt/rt-n56u/trunk
         if [ ! -f configs/templates/$TNAME.config ] ; then
@@ -61,6 +61,13 @@ jobs:
         sed -i '/CONFIG_FIRMWARE_INCLUDE_FRPS/d' .config #删除配置项adbyby plus+
         sed -i '/CONFIG_FIRMWARE_INCLUDE_TUNSAFE/d' .config #删除配置项adbyby plus+
         sed -i '/CONFIG_FIRMWARE_INCLUDE_ALIDDNS/d' .config #删除配置项阿里DDNS
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_SAMBA/d' .config #网络共享（Samba）
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_VLMCSD/d' .config  #KMS服务器设置 vlmcsd
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_AMULE/d' .config  #aMule下载工具 amule  
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_ARIA2/d' .config  # Aria2下载工具 aria2 
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_NETDATA/d' .config  #Netdata实时监控（图表） 
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_QBITTORRENT/d' .config #BT下载工具（qBittorrent）
+        sed -i '/CONFIG_FIRMWARE_INCLUDE_TRANSMISSION/d' .config   #BT下载工具
         sed -i '/CONFIG_FIRMWARE_INCLUDE_SMARTDNS/d' .config
         ######################################################################
         #以下选项是定义你需要的功能（y=集成,n=忽略），重新写入到.config文件
@@ -82,6 +89,13 @@ jobs:
         echo "CONFIG_FIRMWARE_INCLUDE_KOOLPROXY=y" >> .config #KP广告过滤
         echo "CONFIG_FIRMWARE_INCLUDE_CADDY=y" >> .config #在线文件管理服务
         echo "CONFIG_FIRMWARE_INCLUDE_CADDYBIN=n" >> .config #集成caddu执行文件，此文件有13M,请注意固件大小。如果不集成，会从网上下载下来执行，不影响正常使用
+        echo "CONFIG_FIRMWARE_INCLUDE_SAMBA=y" >> .config #网络共享（Samba）
+        echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=y" >> .config #KMS服务器设置
+        echo "CONFIG_FIRMWARE_INCLUDE_AMULE=y" >> .config #aMule下载工具
+        echo "CONFIG_FIRMWARE_INCLUDE_ARIA2=y" >> .config # Aria2下载工具 aria2
+        echo "CONFIG_FIRMWARE_INCLUDE_NETDATA=y" >> .config #Netdata实时监控（图表）
+        echo "CONFIG_FIRMWARE_INCLUDE_QBITTORRENT=y" >> .config #BT下载工具（qBittorrent）
+        echo "CONFIG_FIRMWARE_INCLUDE_TRANSMISSION=y" >> .config #BT下载工具
         echo "CONFIG_FIRMWARE_INCLUDE_KUMASOCKS=y" >> .config
         echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=y" >> .config
         #########################################################################################
